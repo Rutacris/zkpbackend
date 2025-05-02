@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-import { logAuthAttempt } from '../utils/logger.js';
+const logController = require('../controllers/logController');
+
 
 // Root endpoint
 router.get('/', (req, res) => {
@@ -22,10 +23,5 @@ router.get('/', (req, res) => {
   });
 });
 
-router.post('/api/log-auth', (req, res) => {
-  const { username, success, duration, error, timestamp } = req.body;
-  logAuthAttempt(username, success, duration, error);
-  res.status(200).send('Logged');
-});
-
+router.post('/api/log-auth', logController.logger);
 module.exports = router;
